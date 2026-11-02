@@ -2,6 +2,7 @@
 
 from functools import cache
 
+
 @cache
 def hold_golden(p, a=0, b=0):
     """Chance the server wins the game, golden point at 40-40."""
@@ -14,8 +15,9 @@ def hold_golden(p, a=0, b=0):
         return 0
     return p * hold_golden(p, a + 1, b) + q * hold_golden(p, a, b + 1)
 
+
 @cache
-def hold_deuce(p, a=0, b=0):
+def hold_advantage(p, a=0, b=0):
     """Chance the server wins the game, advantage at 40-40."""
     q = 1 - p
     if a == 3 and b == 3:
@@ -24,7 +26,8 @@ def hold_deuce(p, a=0, b=0):
         return 1
     if b == 4:  # receiver won
         return 0
-    return p * hold_deuce(p, a + 1, b) + q * hold_deuce(p, a, b + 1)
+    return p * hold_advantage(p, a + 1, b) + q * hold_advantage(p, a, b + 1)
+
 
 @cache
 def hold_star(p, a=0, b=0):
@@ -40,6 +43,7 @@ def hold_star(p, a=0, b=0):
     if b == 4:  # receiver won
         return 0
     return p * hold_star(p, a + 1, b) + q * hold_star(p, a, b + 1)
+
 
 @cache
 def tiebreak_prob(p_a, p_b, a=0, b=0, first="A"):
@@ -67,10 +71,9 @@ def tiebreak_prob(p_a, p_b, a=0, b=0, first="A"):
         p_a, p_b, a, b + 1, first
     )
 
+
 @cache
-def set_prob(
-    p_a, p_b, hold=hold_star, ga=0, gb=0, server="A"
-):  # where ga and gb are games won by a and b respectively
+def set_prob(p_a, p_b, hold=hold_star, ga=0, gb=0, server="A"):  
     """Chance team A wins the set."""
     h_a = hold(p_a)
     h_b = hold(p_b)

@@ -19,7 +19,7 @@ def sim_game_golden(p):
             return False
 
 
-def sim_game_deuce(p):
+def sim_game_advantage(p):
     """Play one game, advantage at 40-40. True if the server holds."""
     a, b = 0, 0
     while True:
